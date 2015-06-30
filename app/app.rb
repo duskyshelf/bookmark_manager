@@ -29,6 +29,14 @@ class BManager < Sinatra::Base
     erb :'links/index'
   end
 
+  get '/users/new' do
+    erb :'links/new_user'
+  end
+
+  post '/users/welcome' do
+    User.create(email: params[:email])
+    "Welcome, #{params[:email]}"
+  end
 
   run! if app_file == $0
 end
