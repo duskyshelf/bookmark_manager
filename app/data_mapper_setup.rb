@@ -1,6 +1,8 @@
 require 'data_mapper'
 
-DataMapper.setup(:default, "postgres://localhost/bookmark_manager")
+env = ENV['RACK_ENV'] || 'development'
+
+DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
 
 require './app/models/link'
 
