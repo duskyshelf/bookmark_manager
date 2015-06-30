@@ -11,8 +11,10 @@ class BManager < Sinatra::Base
 
   post '/links' do
     link = Link.new(url: params[:url], title: params[:title])
-    tag = Tag.create(name: params[:tag])
-    link.tags << tag
+    params[:tag].split.each do |input|
+      tag = Tag.create(name: input)
+      link.tags << tag
+    end
     link.save
     redirect '/links'
   end
