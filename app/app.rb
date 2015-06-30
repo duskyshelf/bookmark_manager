@@ -12,8 +12,7 @@ class BManager < Sinatra::Base
   post '/links' do
     link = Link.new(url: params[:url], title: params[:title])
     params[:tag].split.each do |input|
-      tag = Tag.create(name: input)
-      link.tags << tag
+      link.tags << Tag.create(name: input)
     end
     link.save
     redirect '/links'
@@ -34,7 +33,8 @@ class BManager < Sinatra::Base
   end
 
   post '/users/welcome' do
-    User.create(email: params[:email])
+    User.create(email: params[:email],
+                password: params[:password])
     "Welcome, #{params[:email]}"
   end
 
