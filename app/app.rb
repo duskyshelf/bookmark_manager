@@ -1,8 +1,14 @@
 require 'sinatra/base'
 
 class BManager < Sinatra::Base
+  enable :sessions
+  set :session_secret, 'super secret'
 
   set :views, proc { File.join(root, '..', 'view') }
+
+  get '/' do
+
+  end
 
   get '/links' do
     @links = Link.all
@@ -32,10 +38,11 @@ class BManager < Sinatra::Base
     erb :'links/new_user'
   end
 
-  post '/users/welcome' do
-    User.create(email: params[:email],
+  post '/users' do
+    user = User.create(email: params[:email],
                 password: params[:password])
-    "Welcome, #{params[:email]}"
+    session[:user_id] = user.user_id
+    redirect '/'
   end
 
   run! if app_file == $0
