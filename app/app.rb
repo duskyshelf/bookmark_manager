@@ -4,10 +4,10 @@ class BManager < Sinatra::Base
   enable :sessions
   set :session_secret, 'super secret'
 
-  set :views, proc { File.join(root, '..', 'view') }
+  set :views, proc { File.join(root, '..', 'views') }
 
   get '/' do
-
+    redirect '/links'
   end
 
   get '/links' do
@@ -43,6 +43,10 @@ class BManager < Sinatra::Base
                 password: params[:password])
     session[:user_id] = user.id
     redirect '/'
+  end
+
+  def current_user
+    @user ||= User.get(session[:user_id])
   end
 
   run! if app_file == $0

@@ -12,6 +12,7 @@ gem 'bcrypt'
 group :development, :test do
   gem 'capybara'
   gem 'rspec'
+  gem 'byebug'
   gem 'rspec-sinatra'
   gem 'database_cleaner'
 end
