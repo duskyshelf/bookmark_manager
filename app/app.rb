@@ -40,9 +40,15 @@ class BManager < Sinatra::Base
 
   post '/users' do
     user = User.create(email: params[:email],
-                password: params[:password])
-    session[:user_id] = user.id
-    redirect '/'
+                       password: params[:password],
+                       password_confirmation: params[:password_confirmation])
+    if params[:password] != params[:password_confirmation]
+      @confirmation_fail = true
+      erb :'links/new_user'
+    else
+      session[:user_id] = user.id
+      redirect '/'
+    end
   end
 
   def current_user
