@@ -35,19 +35,19 @@ class BManager < Sinatra::Base
   end
 
   get '/users/new' do
-    erb :'links/new_user'
+    @user = User.new
+    erb :'users/new_user'
   end
 
   post '/users' do
-    user = User.create(email: params[:email],
+    @user = User.create(email: params[:email],
                        password: params[:password],
                        password_confirmation: params[:password_confirmation])
-    if params[:password] != params[:password_confirmation]
-      @confirmation_fail = true
-      erb :'links/new_user'
-    else
-      session[:user_id] = user.id
+    if @user.save
+      session[:user_id] = @user.id
       redirect '/'
+    else
+      erb :'users/new_user'
     end
   end
 
