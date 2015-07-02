@@ -16,4 +16,5 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-sinatra'
   gem 'database_cleaner'
+  gem 'factory_girl'
 end
