@@ -1,6 +1,5 @@
 feature 'User sign up' do
 
-  # let(:alice) { create :user }
 
   scenario 'users/new page loads correctly' do
     visit '/users/new'
