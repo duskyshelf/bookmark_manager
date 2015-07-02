@@ -1,5 +1,6 @@
 feature 'User sign up' do
 
+  let!(:user) { build :user }
 
   scenario 'users/new page loads correctly' do
     visit '/users/new'
@@ -13,7 +14,7 @@ feature 'User sign up' do
   end
 
   scenario 'requires a matching confirmation password' do
-    expect { sign_up( password_confirmation: 'wrong') }.not_to change(User, :count)
+    expect { sign_up(password_confirmation: 'wrong') }.not_to change(User, :count)
     expect(current_path).to eq('/users')
     expect(page).to have_content 'Password does not match the confirmation'
   end
@@ -30,15 +31,15 @@ feature 'User sign up' do
     expect(page).to have_content('Email is already taken')
   end
 
-  def sign_up(email: 'alice@example.com',
-              password: 'password',
-              password_confirmation: 'password')
-    visit '/users/new'
-    fill_in :email,    with: email
-    fill_in :password, with: password
-    fill_in :password_confirmation, with: password_confirmation
-    click_button 'Sign up'
-  end
+  # def sign_up(email: user.email,
+  #             password: user.password,
+  #             password_confirmation: user.password_confirmation)
+  #   visit '/users/new'
+  #   fill_in :email,    with: email
+  #   fill_in :password, with: password
+  #   fill_in :password_confirmation, with: password_confirmation
+  #   click_button 'Sign up'
+  # end
 
 end
 
@@ -50,11 +51,23 @@ feature 'User sign in' do
     expect(page).to have_content "Welcome, #{user.email}"
   end
 
-  def sign_in(email, password)
-    visit '/sessions/new'
-    fill_in :email, with: email
-    fill_in :password, with: password
-    click_button 'Sign in'
+  # def sign_in(email, password)
+  #   visit '/sessions/new'
+  #   fill_in :email, with: email
+  #   fill_in :password, with: password
+  #   click_button 'Sign in'
+  # end
+
+end
+
+feature 'User signs out' do
+
+  scenario 'while being signed in' do
+    user = create :user
+    sign_in(user.email, user.password)
+    click_button 'Sign out'
+    expect(page).to have_content('goodbye!')
+    expect(page).not_to have_content('Welcome, test@test.com')
   end
 
 
