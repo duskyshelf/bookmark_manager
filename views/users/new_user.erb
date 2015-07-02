@@ -1,7 +1,3 @@
-<% unless false %>
-"your password and confirmation passwords do not match"
-<% end %>
-
 <form action='/users' method='POST'>
 <input type="text" name="email" value='<%= @user.email %>'>
 <input type="password" name="password">
