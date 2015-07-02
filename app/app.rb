@@ -93,8 +93,15 @@ class BManager < Sinatra::Base
   end
 
   get '/users/password_reset/:password_token' do
-    "Enter a new password"
+    session[:token] = params[:password_token]
+    erb :new_password
   end
+
+  post '/new_password' do
+    user.password = params[:new_password]
+    redirect '/links'
+  end
+
 
 
   run! if app_file == $0

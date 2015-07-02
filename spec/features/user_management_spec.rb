@@ -95,14 +95,14 @@ feature 'Password reset' do
     expect(page).to have_content 'Enter a new password'
   end
 
+  scenario 'user can reset their password' do
+    user = create :user
+    user.password_token = 'token'
+    user.save
+
+    visit "/users/password_reset/#{user.password_token}"
+    fill_in 'new_password', with: "new_password"
+    expect(user.password).to eq "new_password"
+  end
+
 end
-
-
-
-
-
-
-
-
-
-
