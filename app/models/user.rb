@@ -6,6 +6,7 @@ class User
   property :id, Serial
   property :email, String, required: true
   property :password_digest, Text
+  property :password_token, Text
 
   def password=(password)
     @password = password

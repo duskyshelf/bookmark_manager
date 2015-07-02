@@ -81,5 +81,16 @@ class BManager < Sinatra::Base
     redirect '/links'
   end
 
+  get '/password_reset' do
+    erb :password_reset
+  end
+
+  post '/password_rest' do
+    user = User.first(email: params[:email])
+    user.password_token = 'yotoken'
+    user.save
+    erb :password_reset
+  end
+
   run! if app_file == $0
 end
