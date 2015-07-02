@@ -49,8 +49,7 @@ class BManager < Sinatra::Base
       session[:user_id] = @user.id
       redirect '/links'
     else
-      notice = @user.errors.full_messages.join('<br/>')
-      flash.now[:notice] = notice
+      flash.now[:errors] = @user.errors.full_messages
       erb :'users/new_user'
     end
   end
