@@ -6,6 +6,8 @@ class BManager < Sinatra::Base
   set :session_secret, 'super secret'
   register Sinatra::Flash
 
+  use Rack::MethodOverride
+
   set :views, proc { File.join(root, '..', 'views') }
 
   get '/' do
@@ -71,6 +73,12 @@ class BManager < Sinatra::Base
       flash.now[:errors] = ['The email or password is incorrect']
       erb :'sessions/new'
     end
+  end
+
+  delete '/sessions' do
+    session[:user_id] = nil
+    flash[:notice] = 'goodbye!'
+    redirect '/links'
   end
 
   run! if app_file == $0
