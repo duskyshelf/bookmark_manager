@@ -55,7 +55,7 @@ class BManager < Sinatra::Base
   end
 
   def current_user
-    @user ||= User.get(session[:user_id])
+    @current_user ||= User.get(session[:user_id])
   end
 
   get '/sessions/new' do
