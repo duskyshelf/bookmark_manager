@@ -58,5 +58,20 @@ class BManager < Sinatra::Base
     @user ||= User.get(session[:user_id])
   end
 
+  get '/sessions/new' do
+    erb :'sessions/new'
+  end
+
+  post '/sessions' do
+    user = User.authenticate(email: params[:email], password: params[:password])
+    if user
+      session[:user_id] = user.id
+      redirect '/links'
+    else
+      flash.now[:errors] = ['The email of password is incorrect']
+      erb :'sessions/new'
+    end
+  end
+
   run! if app_file == $0
 end
