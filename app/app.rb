@@ -92,5 +92,10 @@ class BManager < Sinatra::Base
     "Check your emails"
   end
 
+  get '/users/password_reset/:password_token' do
+    "Enter a new password"
+  end
+
+
   run! if app_file == $0
 end

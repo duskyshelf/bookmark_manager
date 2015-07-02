@@ -86,7 +86,7 @@ feature 'Password reset' do
   end
 
   scenario 'resetting password' do
-    user = User.first
+    user = create :user
     user.password_token = 'token'
     user.save
 
