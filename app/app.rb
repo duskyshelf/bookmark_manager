@@ -85,11 +85,11 @@ class BManager < Sinatra::Base
     erb :password_reset
   end
 
-  post '/password_rest' do
+  post '/password_reset' do
     user = User.first(email: params[:email])
     user.password_token = 'yotoken'
     user.save
-    erb :password_reset
+    "Check your emails"
   end
 
   run! if app_file == $0
