@@ -67,7 +67,7 @@ feature 'User signs out' do
     sign_in(user.email, user.password)
     click_button 'Sign out'
     expect(page).to have_content('goodbye!')
-    expect(page).not_to have_content('Welcome, #{user.email}')
+    expect(page).not_to have_content("Welcome, #{user.email}")
   end
 
 end
@@ -97,12 +97,14 @@ feature 'Password reset' do
 
   scenario 'user can reset their password' do
     user = create :user
-    user.password_token = 'token'
+    user.password_token = 'other_token'
     user.save
 
-    visit "/users/password_reset/#{user.password_token}"
+    visit "/users/password_reset/other_token"
     fill_in 'new_password', with: "new_password"
-    expect(user.password).to eq "new_password"
+    click_button 'reset'
+    sign_in(user.email, "new_password")
+    expect(page).to have_content "Welcome, #{user.email}"
   end
 
 end

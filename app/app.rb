@@ -87,7 +87,7 @@ class BManager < Sinatra::Base
 
   post '/password_reset' do
     user = User.first(email: params[:email])
-    user.password_token = 'yotoken'
+    user.password_token = 'token'
     user.save
     "Check your emails"
   end
@@ -98,7 +98,10 @@ class BManager < Sinatra::Base
   end
 
   post '/new_password' do
+    user = User.first(password_token: session[:token])
     user.password = params[:new_password]
+    user.password_confirmation = params[:new_password]
+    user.save
     redirect '/links'
   end
 
